@@ -18,4 +18,61 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>guidance</title>
+    <url>/2025/02/16/guidance-1/</url>
+    <content><![CDATA[<p>#Hexo搭建个人博客指南</p>
+<p>本文分为以下内容：</p>
+<ol>
+<li>准备工作，包括一些必要的安装程序以及配置；</li>
+<li>一些配置文件的个性化修改；</li>
+<li>发文。</li>
+</ol>
+<h2 id="1、准备工作"><a href="#1、准备工作" class="headerlink" title="1、准备工作"></a>1、准备工作</h2><h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p>直接去官网下载即可。所有过程直接下一步即可，并勾选’add to path’添加至系统环境变量。如果电脑之前安装过node.js，也要确认一下版本是否最新，所以直接重新再下一遍就好了。下载后打开cmd，输入如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<p>如果node.js安装成功会显示node版本号，再输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>成功的话会显示npm的版本号。</p>
+<h3 id="安装Git以及配置"><a href="#安装Git以及配置" class="headerlink" title="安装Git以及配置"></a>安装Git以及配置</h3><p>去官网下，所有过程下一步。下载后直接桌面右键，会多一个<code>git bash here</code>,如果没有的话去开始栏菜单找应该也是有的。点击·git bash here·，会出来一个控制台，之后所有的文件配置和发文都是在这个地方发指令。</p>
+<p>在命令行输入如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git config --global user.name &quot;user_name&quot;</span><br><span class="line">$ git config --global user.email &quot;user_email&quot; </span><br></pre></td></tr></table></figure>
+
+<p><code>user_name</code>应为自己github账号的id，<code>user_email</code>为注册的邮箱。需要注意的是并不能直接复制黏贴上述代码到命令行，需要自己手动敲。我们在这里默认已经在github里配置好了仓库(实际上已经弄好了)，接下来要把git上自己的github。还是在git bash里输入如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;user.email&quot;</span><br></pre></td></tr></table></figure>
+
+<p>狂敲回车即可。打开用户主目录<code>c:/users/username/.ssh</code>文件，一般来说会有三个文件，<code>id_rsa.pub</code>,<code>id_rsa</code>以及一个<code>known_host</code>，如果第三个没有也没关系。用记事本（用什么都行）打开<code>id_rsa.pub</code>，复制里面的内容，再打开GitHub SSH and GPF keys页面（点击自己github账户的头像（右上角，下面有一个settings,点进去会看到ssh什么的）），新建一个ssh key，把复制的内容粘贴进去，title任意即可，不写也行。然后确认一下公钥是否设置成功，在git bash里输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>如前所述，如果<code>.ssh</code>文件里有<code>known.host</code>文档的话那应该是会成功的，如果没有的话，进行这一步的时候它会问你是否继续之类的话，输入yes，那么应该就可以了。</p>
+<h3 id="使用Hexo博客框架"><a href="#使用Hexo博客框架" class="headerlink" title="使用Hexo博客框架"></a>使用Hexo博客框架</h3><p>本来用github就足够搭建个人博客了。但是利用hexo进行管理可能更好看一点。输入如下命令进行安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>之后是配置Hexo。好在我已经做好了，直接解压缩到某个盘中即可，之后所有的工作都要在这个文件路径下，即<code>blog</code>文件，输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd ~:/blog</span><br></pre></td></tr></table></figure>
+
+<p>如果是c盘就是<code>c:/blog</code>，这样路径就切到个人博客文件下了。理论上到这一步应该就都做好了。输入一下指令确认一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean #初始化</span><br><span class="line">hexo g #生成静态文件</span><br><span class="line">hexo s #开启本地预览，浏览器访问http://localhost:4000可以看到内容，但此时还未部署到github上</span><br><span class="line">hexo d #部署到github上，输入自己的网址即可看到</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2、配置文件"><a href="#2、配置文件" class="headerlink" title="2、配置文件"></a>2、配置文件</h2><p>接下来是个性化的配置。首先是主题的选取，本模组使用的是next主题，比较干净简单。关于更多的主题可以自行搜索，也不是很难，bash上一行代码的事。其次本模组还多加了一个kuroneko。此外没有多加什么组件了。预想的还可以更新的几个地方有：</p>
+<ol>
+<li>搞一个评论栏；</li>
+<li>搞一个音乐播放器；</li>
+<li>网站图标；</li>
+<li>个人头像。</li>
+</ol>
+<p>前两个比较麻烦，但其实也不难，教程一堆，后两个比较简单，教程也一堆。现在基于Next主题简单介绍一下配置文件。首先在<code>~:\blog</code>目录下，有一个<code>_congfig,yml</code>文件，这个是整个博客的配置文件，在<code>blog/theme/next</code>路径下，还有一个<code>_congfig,yml</code>文件，这个暂且叫做主题配置文件。网站名以及一些插件的修改要到配置文件里改，更换next主题样式要去主题配置文件里改（废话）。但这些都不是必要的，不管也没事，把网站名改一下就行。</p>
+<h2 id="3、发文"><a href="#3、发文" class="headerlink" title="3、发文"></a>3、发文</h2><p>这个比较重要。</p>
+<p>首先是格式。就是本文的title，author，tags，categories等等。样式文件可以去<code>blog/scaffolds</code>文件里修改，已经提供三种了。但没什么必要。只要在要发的文件的开头写上：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">tilte: 今天吃什么</span><br><span class="line">author: 不想吃饭啊</span><br><span class="line">date: </span><br><span class="line">tags: 随便吃点</span><br><span class="line">categories: 吃饱了</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>之后正常写作就好了。写好后的文件放到<code>blog/source/_posts</code>里就好了。还是一样。在bash里输入<code>hexo g -d</code>即可。</p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
 </search>
